@@ -9,8 +9,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-app.mount('/static', StaticFiles(directory='static',html=True))
-
 app.include_router(entity)
 app.include_router(sso)
 app.include_router(map)
