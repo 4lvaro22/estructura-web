@@ -1,7 +1,4 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+from fastapi import FastAPI
 from routes.entity_routes import entity
 from routes.map_routes import map
 from routes.sso_routes import sso
