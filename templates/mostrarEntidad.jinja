@@ -1,0 +1,89 @@
+{% extends "base.jinja" %}
+{% block title %} Editar entidad {% endblock %}
+{% block body %}
+<h1>Editar entidad</h1>
+<table border>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Fecha de creado</th>
+            <th>Fecha de última actualización</th>
+            <th>Imágenes</th>
+            <th>Latitud</th>
+            <th>Longitud</th>
+            <th>Direccion</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in entities_list: %}
+        <tr>
+            <td>{{entity.id}}</td>
+            <td>{{entity.name}}</td>
+            <td>{{entity.description}}</td>
+            <td>{{entity.created_at}}</td>
+            <td>{{entity.updated_at}}</td>
+            {# <td>
+                <swiper-container class="mySwiper" pagination="true" pagination-type="progressbar" navigation="true"
+                    loop="true">
+                    {%for image in entity.images%}
+                    <swiper-slide><img src="{{image}}"></swiper-slide>
+                    {%endfor%}
+                </swiper-container>
+            </td> #}
+            <td>
+                {%if entity.images == ""%}
+                    <p>No hay imagenes</p>
+                {%else%}
+                    <img src="{{entity.images}}" width="100px" height="100px">
+                {%endif%}
+            </td>
+            <td>
+                <p id="lat{{loop.index}}">{{entity.latitud}}</p>
+            </td>
+            <td>
+                <p id="lon{{loop.index}}">{{entity.longitud}}</p>
+            </td>
+            <td>
+                <p>{{entity.direccion}}</p>
+            </td>
+            <td><a href='/borrar/{{ entity.id }}'>Borrar entidad</a></td>
+            <td><a href='/editar/{{ entity.id }}'>Editar entidad</a></td>
+            <td><a href='/mapa/{{ entity.id }}'>Ver mapa mediante coordenadas</a></td>
+            <td><a href='/mapa/direccion/{{ entity.id }}'>Ver mapa mediante direccion</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Mapas por coordenadas</h2>
+<div id="mapdiv" style="width: 1000px; height: 700px; margin-top: 20px; margin-left: auto; margin-right: auto;"></div>
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script>
+    var xhttp;
+
+    map = new OpenLayers.Map("mapdiv");
+    map.addLayer(new OpenLayers.Layer.OSM());
+    var markers = new OpenLayers.Layer.Markers("Markers");
+    map.addLayer(markers);
+
+    for (let i = 1; i <= {{ entities_list| length}}; i++) {
+        var lon = document.getElementById("lon" + i).innerHTML;
+        var lat = document.getElementById("lat" + i).innerHTML;
+
+        var lonLat = new OpenLayers.LonLat(lon, lat).transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            map.getProjectionObject() // to Spherical Mercator Projection
+        );
+
+        markers.addMarker(new OpenLayers.Marker(lonLat));
+    }
+
+    var zoom = 4;
+    map.setCenter(lonLat, zoom);
+
+</script>
+
+{# <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script> #}
+{% endblock %}

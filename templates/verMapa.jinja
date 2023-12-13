@@ -1,0 +1,22 @@
+{% extends "base.jinja" %}
+{% block title %}Ver mapa por Coordenadas{% endblock %}
+{% block body %}
+<h2>Ver mapa</h2>
+<table border>
+      <tbody>
+            <tr>
+                  <td>Coordenadas (latitud)</td>
+                  <td>
+                        <p id="lat">{{ entity.latitud }}</p>
+                  </td>
+            </tr>
+            <tr>
+                  <td>Coordenadas (longitud)</td>
+                  <td>
+                        <p id="lon">{{ entity.longitud }}</p>
+                  </td>
+            </tr>
+      </tbody>
+</table>
+{% include 'mapa.jinja' %}
+{% endblock %}

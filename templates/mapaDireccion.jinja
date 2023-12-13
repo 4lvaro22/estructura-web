@@ -1,0 +1,49 @@
+{% block body %}
+<div id="mapdiv"></div>
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script>
+        
+      var xhttp;
+
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = handleResponse;
+      
+      var lugar = document.getElementById("lugar").innerHTML;
+      
+      var url = "http://nominatim.openstreetmap.org/search?q=" + lugar + 
+                  "&format=json&addressdetails=1";    
+
+      console.log(url);
+      xhttp.open("GET", url, true);
+      xhttp.send(null);
+            
+      function handleResponse() {
+            
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                  
+                  var response = xhttp.responseText;
+                  
+                  var texto = JSON.parse(response);
+                  
+                  map = new OpenLayers.Map("mapdiv");
+                  map.addLayer(new OpenLayers.Layer.OSM());
+
+                  var lonLat = new OpenLayers.LonLat(texto[0].lon, texto[0].lat)
+                        .transform(
+                              new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+                              map.getProjectionObject() // to Spherical Mercator Projection
+                        );
+
+                  var markers = new OpenLayers.Layer.Markers("Markers");
+                  markers.addMarker(new OpenLayers.Marker(lonLat));
+
+                  map.addLayer(markers);
+
+                  var zoom = 6;
+
+                  map.setCenter(lonLat, zoom);
+
+            }
+      }
+</script>
+{% endblock %}

@@ -1,0 +1,66 @@
+
+{% block head %}
+<meta charset="UTF-8">
+<title>Editar entidad</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    th,
+    td {
+        padding: 5px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+
+<html>
+
+<head>
+    <title>Mostar entidades</title>
+
+</head>
+
+<body>
+
+    <h1>Editar entidad</h1>
+    <form method="post" action="" role="form" enctype="multipart/form-data">
+        <table border>
+            <tbody>
+                <tr>
+                    <td>Nombre</td>
+                    <td> <input value="{{ entity.name }}" type="text" name="name" id="name" /></td>
+                </tr>
+                <tr>
+                    <td>Descripción</td>
+                    <td> <input value="{{ entity.description }}" type="text" name="description" id="description" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="imagen" class="btn btn-primary">Imagen actual</label><br><br>
+                        {%if entity.images == ""%}
+                            <p>No hay imagenes</p>
+                        {%else%}
+                            <img src="{{entity.images}}" width="100px" height="100px">
+                        {%endif%}
+                    </td>
+                    <td>
+                        <label for="file" class="btn btn-primary">Cambiar imagen</label><br><br>
+                        <input name="file" id="file" type="file" value="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Latitud</td>
+                    <td> <input value="{{ entity.latitud }}" type="number" step="0.0000001" name="latitud" /></t>
+                </tr>
+                <tr>
+                    <td>Longitud</td>
+                    <td> <input value="{{ entity.longitud }}" type="text" step="0.0000001" name="longitud" /></t>
+                </tr>
+                <tr>
+                    <td>Direccion</td>
+                    <td> <input value="{{ entity.direccion }}" type="text" name="direccion" /></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit">Editar Entidad</button>
+    </form>
+    {% endblock %}

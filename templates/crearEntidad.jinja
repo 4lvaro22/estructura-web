@@ -1,0 +1,49 @@
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crear entidad</title>
+<style>
+    th,
+    td {
+        padding: 5px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<h1>Crear entidad</h1>
+<form method="post" action="/crear" role="form" enctype="multipart/form-data">
+    <table border>
+        <tbody>
+            <!-- Nombre -->
+            <tr>
+                <td>Nombre</td>
+                <td> <input type="text" name="name" id="name" /></td>
+            </tr>
+            <!-- Descripción -->
+            <tr>
+                <td>Descripción</td>
+                <td> <input type="text" name="description" id="description" /></td>
+            </tr>
+            <!-- Imágenes -->
+            <tr>
+                <td><input name="file" id="file" type="file"/> {# multiple /> #}</td>
+            </tr>
+            <!-- Latitud -->
+            <tr>
+                <td>Latitud</td>
+                <td> <input type="number" step="0.0000001" name="latitud" /></td>
+            </tr>
+            <!-- Longitud -->
+            <tr>
+                <td>Longitud</td>
+                <td> <input type="number" step="0.0000001" name="longitud" /></td>
+            </tr>
+            <tr>
+                <td>Direccion</td>
+                <td> <input type="text" name="direccion" id="direccion" /></td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit">Crear Entidad</button>
+</form>
+{% endblock %}
