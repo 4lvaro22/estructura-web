@@ -1,30 +1,29 @@
-{% block body %}
 <div id="mapdiv"></div>
 <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
 <script>
-        
+
       var xhttp;
 
       xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = handleResponse;
-      
+
       var lugar = document.getElementById("lugar").innerHTML;
-      
-      var url = "http://nominatim.openstreetmap.org/search?q=" + lugar + 
-                  "&format=json&addressdetails=1";    
+
+      var url = "http://nominatim.openstreetmap.org/search?q=" + lugar +
+            "&format=json&addressdetails=1";
 
       console.log(url);
       xhttp.open("GET", url, true);
       xhttp.send(null);
-            
+
       function handleResponse() {
-            
+
             if (xhttp.readyState == 4 && xhttp.status == 200) {
-                  
+
                   var response = xhttp.responseText;
-                  
+
                   var texto = JSON.parse(response);
-                  
+
                   map = new OpenLayers.Map("mapdiv");
                   map.addLayer(new OpenLayers.Layer.OSM());
 
@@ -46,4 +45,3 @@
             }
       }
 </script>
-{% endblock %}

@@ -34,9 +34,9 @@
             </td> #}
             <td>
                 {%if entity.images == ""%}
-                    <p>No hay imagenes</p>
+                <p>No hay imagenes</p>
                 {%else%}
-                    <img src="{{entity.images}}" width="100px" height="100px">
+                <img src="{{entity.images}}" width="100px" height="100px">
                 {%endif%}
             </td>
             <td>
@@ -48,10 +48,15 @@
             <td>
                 <p>{{entity.direccion}}</p>
             </td>
-            <td><a href='/borrar/{{ entity.id }}'>Borrar entidad</a></td>
-            <td><a href='/editar/{{ entity.id }}'>Editar entidad</a></td>
-            <td><a href='/mapa/{{ entity.id }}'>Ver mapa mediante coordenadas</a></td>
-            <td><a href='/mapa/direccion/{{ entity.id }}'>Ver mapa mediante direccion</a></td>
+
+            <td>
+                <button style="margin-bottom: 10px;"><a href='/borrar/{{ entity.id }}'>Borrar</a></button>
+                <button style="margin-start: 50px;"><a href='/editar/{{ entity.id }}'>Editar</a></button><br>
+                <button style="margin-bottom: 10px;"><a href='/mapa/{{ entity.id }}'>Ver mapa mediante
+                        coordenadas</a></button><br>
+                <button ><a href='/mapa/direccion/{{ entity.id }}'>Ver mapa mediante
+                        direccion</a></button>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
@@ -85,5 +90,6 @@
 
 </script>
 
-{# <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script> #}
+{#
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script> #}
 {% endblock %}

@@ -1,0 +1,74 @@
+<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+
+<script>
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBig7mqGdWqjru1rEaPwiJEakQ35kXItg8",
+        authDomain: "elrastro-d904f.firebaseapp.com",
+        projectId: "elrastro-d904f",
+        storageBucket: "elrastro-d904f.appspot.com",
+        messagingSenderId: "989640174547",
+        appId: "1:989640174547:web:75c8e91bc2036707a21d26",
+        measurementId: "G-MV7Z8LTML7"
+    };
+
+    app = firebase.initializeApp(firebaseConfig);
+
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth.languageCode = 'es';
+</script>
+
+<script>
+    function signIn() {
+        app.auth().signInWithPopup(provider).then(function (result) {
+            firebase.auth().currentUser.getIdToken(true).catch(function (error) {
+            });
+
+            var token = result.credential.idToken;
+            var user = result.user;
+
+            const tokenR = user.getIdToken(true).then(function (idToken) {
+                fetch("/signin", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(idToken)
+                }).then(function (response) {
+                    if (response.ok) {
+                        document.cookie = "token=" + idToken + ";path=/";
+                        location.href = "/"
+                        return;
+                    }
+                    throw new Error('La respuesta no es OK');
+                }).catch(function (error) {
+                    console.log('Hubo un problema con la petición Fetch:' + error.message);
+                });
+
+            })
+
+        }).catch(function (error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            console.log('An error happened' + errorMessage);
+        });
+
+    }
+
+    function signOut() {
+
+        app.auth().signOut().then(function () {
+            console.log('User signed out.');
+            location.href = "/signout";
+        }).catch(function (error) {
+            console.log('An error happened');
+        });
+    }
+
+</script>
